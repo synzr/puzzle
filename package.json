@@ -5,7 +5,8 @@
   "main": "puzzle.js",
   "scripts": {
     "start": "node puzzle.js",
-    "dev": "nodemon puzzle.js"
+    "dev": "nodemon puzzle.js",
+    "lint": "standard --fix"
   },
   "keywords": [],
   "author": "synzr <sora@synzr.ru>",
