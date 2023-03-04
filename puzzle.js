@@ -19,6 +19,11 @@ app.set(
     'environment', process.env.NODE_ENV || 'development'
   )
 )
+app.set(
+  'logger', utilities.createLogger(
+    app.get('environment')
+  )
+)
 
 // Adds the middlewares
 app.use(express.urlencoded({ extended: false }))
@@ -29,5 +34,11 @@ app.get('/', (req, res) => res.send({ hello: 'world' }))
 // Starts the listener
 const listener = app.listen(app.get('port'), () => {
   const { address, port } = listener.address()
-  console.log(`Listening at ${address}:${port}`)
+  const logger = app.get('logger')
+
+  logger.log({
+    level: 'info',
+    message: `Listening at ${address}:${port}`,
+    address: { address, port }
+  })
 })

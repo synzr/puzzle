@@ -1,6 +1,6 @@
 {
   "name": "puzzle",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A Toro and Friends: Onsen Town server emulator",
   "main": "puzzle.js",
   "scripts": {
@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "config": "^3.3.9",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "winston": "^3.8.2"
   }
 }
