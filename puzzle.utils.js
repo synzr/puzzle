@@ -6,6 +6,9 @@
 const config = require('config')
 const winston = require('winston')
 
+const knex = require('knex')
+const knexfile = require('./knexfile')
+
 /**
  * Gets the configuration value or default.
  *
@@ -40,4 +43,20 @@ const createLogger = (environment = 'development') =>
     ]
   })
 
-module.exports = { getConfigurationValueOrDefault, createLogger }
+/**
+ * Creates a configured Knex instance
+ *
+ * @param {String} environment Environment name
+ * @returns {knex.Knex} The Knex instance
+ */
+const createKnex = (environment = 'development') =>
+  knex(
+    Object.hasOwn(knexfile, environment)
+      ? knexfile[environment]
+      : knexfile.development
+  )
+
+module.exports = {
+  getConfigurationValueOrDefault,
+  create: { logger: createLogger, knex: createKnex }
+}

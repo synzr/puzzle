@@ -20,7 +20,12 @@ app.set(
   )
 )
 app.set(
-  'logger', utilities.createLogger(
+  'logger', utilities.create.logger(
+    app.get('environment')
+  )
+)
+app.set(
+  'knex', utilities.create.knex(
     app.get('environment')
   )
 )
