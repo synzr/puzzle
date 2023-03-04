@@ -1,0 +1,21 @@
+{
+  "name": "puzzle",
+  "version": "0.0.0",
+  "description": "A Toro and Friends: Onsen Town server emulator",
+  "main": "puzzle.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "activate-hooks": "husky install",
+    "add-husky-hook": "husky add .husky/commit-msg 'npx --no -- commitlint --edit ${1}'"
+  },
+  "keywords": [],
+  "author": "synzr <sora@synzr.ru>",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@commitlint/cli": "^17.4.4",
+    "@commitlint/config-conventional": "^17.4.4",
+    "husky": "^8.0.3",
+    "nodemon": "^2.0.21",
+    "standard": "^17.0.0"
+  }
+}
