@@ -6,7 +6,7 @@
 const express = require('express')
 const utilities = require('./puzzle.utils')
 
-const langCultureRouter = require('./routes/neptune-sdk/lang-culture')
+const langCultureRouter = require('./routes/neptune/lang-culture')
 
 const app = express()
 
