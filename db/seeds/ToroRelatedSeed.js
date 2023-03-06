@@ -48,6 +48,10 @@ const seed = (knex) => knex('nt_games')
             game_id: toroId,
             localization_id: localization.id
           })))
+          .then(
+            () => knex('nt_servers')
+              .insert({ id: uuid(), game_id: toroId })
+          )
       )
   )
 

@@ -6,6 +6,7 @@
 const express = require('express')
 const utilities = require('./puzzle.utils')
 
+const gameServerRouter = require('./routes/neptune/game-server')
 const langCultureRouter = require('./routes/neptune/lang-culture')
 
 const app = express()
@@ -44,6 +45,7 @@ app.use((req, res, next) => {
 })
 
 // Declares the routers
+app.use('/api/gameServer/', gameServerRouter)
 app.use('/api/langCulture/game/', langCultureRouter)
 
 // Starts the listener
