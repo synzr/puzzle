@@ -11,9 +11,9 @@
  */
 const development = {
   client: 'better-sqlite3',
-  connection: {
-    filename: 'database.sqlite3'
-  },
+  connection: { filename: './db/database.sqlite3' },
+  migrations: { directory: './db/migrations/' },
+  seeds: { directory: './db/seeds/' },
   useNullAsDefault: true // SQLite doesn't support auto-default values
 }
 

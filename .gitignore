@@ -105,3 +105,6 @@ dist
 
 # Husky
 .husky/_/
+
+# SQLite3 development database
+database.sqlite3
