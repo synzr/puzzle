@@ -108,3 +108,6 @@ dist
 
 # SQLite3 development database
 database.sqlite3
+
+# Visual Studio Code
+.vscode/
