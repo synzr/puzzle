@@ -39,14 +39,6 @@ app.set(
 
 // Adds the middlewares
 app.use(express.urlencoded({ extended: false }))
-app.use((req, res, next) => {
-  console.log('Method:', req.method)
-  console.log('Full URL:', req.originalUrl)
-  console.log('Body:', req.body)
-  console.log('Headers:', req.headers)
-
-  next()
-})
 
 // Declares the routers
 if (config.get('enabledApis').includes('neptune')) {
@@ -58,6 +50,26 @@ if (config.get('enabledApis').includes('integration')) {
   app.use('/api/api_version/', versioningRouter)
 }
 
+if (app.get('environment') === 'development') {
+  app.use((req, res, next) => {
+    const logger = req.app.get('logger')
+
+    logger.log({
+      level: 'debug',
+      message: `Unknown request. URL: ${req.originalUrl}, HTTP method: ${req.method}, user agent: ${req.get('user-agent')}`,
+      details: {
+        method: req.method,
+        url: req.originalUrl,
+        userAgent: req.get('user-agent'),
+        body: req.body,
+        headers: req.headers
+      }
+    })
+
+    next()
+  })
+}
+
 // Starts the listener
 const listener = app.listen(app.get('port'), () => {
   const { address, port } = listener.address()
@@ -66,6 +78,12 @@ const listener = app.listen(app.get('port'), () => {
   logger.log({
     level: 'info',
     message: `Listening at ${address}:${port}`,
-    address: { address, port }
+    details: {
+      address: {
+        humanIp: `${address}:${port}`,
+        ip: address,
+        port
+      }
+    }
   })
 })

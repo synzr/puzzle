@@ -8,7 +8,15 @@ const router = new Router()
 
 router.post('/useList', async (req, res) => {
   const knex = req.app.get('knex')
-  const { gameCd: gameCode } = req.body
+  const logger = req.app.get('logger')
+
+  const { gameCd: gameCode, clientVersion, os } = req.body
+
+  logger.log({
+    level: 'info',
+    message: `Avaliable localizations of the game ${gameCode} was requested. Client version: ${clientVersion}, platform: ${os}`,
+    details: { clientVersion, platform: os, gameCode }
+  })
 
   let gameId = await knex('nt_games')
     .select('id')
@@ -16,6 +24,11 @@ router.post('/useList', async (req, res) => {
     .first()
 
   if (!gameId) {
+    logger.log({
+      level: 'warn',
+      message: `Game ${gameCode} not found.`,
+      details: { gameCode }
+    })
     return res.json({ isSuccess: false })
   }
 
@@ -26,6 +39,12 @@ router.post('/useList', async (req, res) => {
       .select('localization_id')
       .where('game_id', gameId)
   )
+  logger.log({
+    level: 'info',
+    message: `Successfully found ${localizations.length} avaliable localizations of the game ${gameCode}.`,
+    details: { count: localizations.length, gameCode }
+  })
+
   return res.json({
     isSuccess: true,
     data: localizations.map((localization) => ({

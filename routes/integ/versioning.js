@@ -9,7 +9,15 @@ const router = new Router()
 // TODO: make data.countryInfo real
 router.post('/getClientVersionInfo', async (req, res) => {
   const knex = req.app.get('knex')
+  const logger = req.app.get('logger')
+
   const { gameCd: gameCode, clientVersion, os } = req.body
+
+  logger.log({
+    level: 'info',
+    message: `Information of the client version was requested. Game code: ${gameCode}, version code: ${clientVersion}, platform: ${os}`,
+    details: { versionCode: clientVersion, platform: os, gameCode }
+  })
 
   let gameId = await knex('nt_games')
     .select('id')
@@ -17,6 +25,11 @@ router.post('/getClientVersionInfo', async (req, res) => {
     .first()
 
   if (!gameId) {
+    logger.log({
+      level: 'warn',
+      message: `Game ${gameCode} not found.`,
+      details: { gameCode }
+    })
     return res.json({ isSuccess: false })
   }
 
@@ -28,8 +41,19 @@ router.post('/getClientVersionInfo', async (req, res) => {
     .first()
 
   if (!client) {
+    logger.log({
+      level: 'warn',
+      message: `Information of the client version ${clientVersion} not found.`,
+      details: { clientVersion }
+    })
     return res.json({ isSuccess: false })
   }
+
+  logger.log({
+    level: 'info',
+    message: `Successfully found information of the client version ${clientVersion}.`,
+    details: { clientVersion }
+  })
 
   return res.json({
     isSuccess: true,
