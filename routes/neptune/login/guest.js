@@ -92,7 +92,8 @@ router.post('/getLoginToken', async (req, res) => {
   }
 
   const sessionToken = jwt.sign({
-    userId: guestUser.id
+    userId: guestUser.id,
+    tokenType: 'PLATFORM_SESSION_TOKEN'
   }, jwtSecret, {
     expiresIn: '24h'
   })

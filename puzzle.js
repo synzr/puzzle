@@ -13,6 +13,7 @@ const crypto = require('crypto')
 const gameServerRouter = require('./routes/neptune/game-server')
 const langCultureRouter = require('./routes/neptune/lang-culture')
 const loginRouter = require('./routes/neptune/login/index')
+const policyRouter = require('./routes/neptune/policy')
 
 const versioningRouter = require('./routes/integ/versioning')
 
@@ -53,6 +54,7 @@ if (config.get('enabledApis').includes('neptune')) {
   app.use('/api/gameServer/', gameServerRouter)
   app.use('/api/langCulture/game/', langCultureRouter)
   app.use('/api/v1/login/', loginRouter)
+  app.use('/api/policy/v2/nid/', policyRouter)
 }
 
 if (config.get('enabledApis').includes('integration')) {
