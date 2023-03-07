@@ -4,10 +4,14 @@
  */
 
 const express = require('express')
+
+const config = require('config')
 const utilities = require('./puzzle.utils')
 
 const gameServerRouter = require('./routes/neptune/game-server')
 const langCultureRouter = require('./routes/neptune/lang-culture')
+
+const versioningRouter = require('./routes/integ/versioning')
 
 const app = express()
 
@@ -45,8 +49,14 @@ app.use((req, res, next) => {
 })
 
 // Declares the routers
-app.use('/api/gameServer/', gameServerRouter)
-app.use('/api/langCulture/game/', langCultureRouter)
+if (config.get('enabledApis').includes('neptune')) {
+  app.use('/api/gameServer/', gameServerRouter)
+  app.use('/api/langCulture/game/', langCultureRouter)
+}
+
+if (config.get('enabledApis').includes('integration')) {
+  app.use('/api/api_version/', versioningRouter)
+}
 
 // Starts the listener
 const listener = app.listen(app.get('port'), () => {

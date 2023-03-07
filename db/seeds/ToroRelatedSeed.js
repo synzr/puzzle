@@ -41,18 +41,22 @@ const seed = (knex) => knex('nt_games')
         }
       ])
       .returning('*')
-      .then(
-        (localizations) => knex('nt_localizations_games')
-          .insert(localizations.map((localization) => ({
-            id: uuid(),
-            game_id: toroId,
-            localization_id: localization.id
-          })))
-          .then(
-            () => knex('nt_servers')
-              .insert({ id: uuid(), game_id: toroId })
-          )
-      )
+  )
+  .then(
+    (localizations) => knex('nt_localizations_games')
+      .insert(localizations.map((localization) => ({
+        id: uuid(),
+        game_id: toroId,
+        localization_id: localization.id
+      })))
+  )
+  .then(
+    () => knex('nt_servers')
+      .insert({ id: uuid(), game_id: toroId })
+  )
+  .then(
+    () => knex('it_client_versions')
+      .insert({ id: uuid(), game_id: toroId, version_code: '1.2.1' })
   )
 
 module.exports = { seed }

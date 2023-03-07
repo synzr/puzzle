@@ -1,4 +1,9 @@
 {
   "port": 5000,
-  "environment": "development"
+  "environment": "development",
+  "enabledApis": [
+    "neptune",
+    "integration",
+    "game"
+  ]
 }
