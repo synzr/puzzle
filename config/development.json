@@ -5,5 +5,6 @@
     "neptune",
     "integration",
     "game"
-  ]
+  ],
+  "jwtSecret": "1e1289ac826897ae8f8b05e15fbeace69fa33c03cf60f7c1dfc830a276a1b62a"
 }

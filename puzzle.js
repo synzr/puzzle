@@ -8,8 +8,11 @@ const express = require('express')
 const config = require('config')
 const utilities = require('./puzzle.utils')
 
+const crypto = require('crypto')
+
 const gameServerRouter = require('./routes/neptune/game-server')
 const langCultureRouter = require('./routes/neptune/lang-culture')
+const loginRouter = require('./routes/neptune/login/index')
 
 const versioningRouter = require('./routes/integ/versioning')
 
@@ -36,6 +39,11 @@ app.set(
     app.get('environment')
   )
 )
+app.set(
+  'jwtSecret', utilities.getConfigurationValueOrDefault(
+    'jwtSecret', crypto.randomBytes(256).toString('hex')
+  )
+)
 
 // Adds the middlewares
 app.use(express.urlencoded({ extended: false }))
@@ -44,6 +52,7 @@ app.use(express.urlencoded({ extended: false }))
 if (config.get('enabledApis').includes('neptune')) {
   app.use('/api/gameServer/', gameServerRouter)
   app.use('/api/langCulture/game/', langCultureRouter)
+  app.use('/api/v1/login/', loginRouter)
 }
 
 if (config.get('enabledApis').includes('integration')) {
