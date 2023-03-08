@@ -15,7 +15,7 @@ const langCultureRouter = require('./routes/neptune/lang-culture')
 const loginRouter = require('./routes/neptune/login/index')
 const policyRouter = require('./routes/neptune/policy')
 
-const versioningRouter = require('./routes/integ/versioning')
+const versioningRouter = require('./routes/integration/versioning')
 
 const app = express()
 
