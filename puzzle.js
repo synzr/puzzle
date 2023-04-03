@@ -17,6 +17,8 @@ const policyRouter = require('./routes/neptune/policy')
 
 const versioningRouter = require('./routes/integration/versioning')
 
+const lineGamesRouter = require('./routes/game/line-games')
+
 const app = express()
 
 // Declares the application variables
@@ -59,6 +61,10 @@ if (config.get('enabledApis').includes('neptune')) {
 
 if (config.get('enabledApis').includes('integration')) {
   app.use('/api/api_version/', versioningRouter)
+}
+
+if (config.get('enabledApis').includes('game')) {
+  app.use('/linegames/', lineGamesRouter)
 }
 
 if (app.get('environment') === 'development') {

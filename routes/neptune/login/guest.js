@@ -107,17 +107,17 @@ router.post('/getLoginToken', async (req, res) => {
   return res.json({
     success: true,
     data: {
-      newGnidYn: utilities.convertBooleanToYN(newGuestUser),
+      newGnidYn: utilities.convert.booleanToYN(newGuestUser),
       gnidHash: guestUser.gnid_hash,
       pfSessionToken: sessionToken,
       countryCreated: 'US', // TODO: make this for real for real
       policyAgreeInfo: {
-        termsAgreeUnixTS: null,
-        privacyAgreeUnixTS: null,
+        termsAgreeUnixTS: guestUser.terms_agree_timestamp / 1000,
+        privacyAgreeUnixTS: guestUser.privacy_agree_timestamp / 1000,
         ageCheckCompletedUnixTS: null,
         privacyTransferAgreeUnixTS: null,
-        pushAgreeYn: null,
-        pushAgreeUnixTS: null,
+        pushAgreeYn: utilities.convert.booleanToYN(guestUser.push_agree),
+        pushAgreeUnixTS: guestUser.push_agree_timestamp / 1000,
         nightPushAgreeYn: null,
         nightPushAgreeUnixTS: null,
         needAgreePushYn: 'N',

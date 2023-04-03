@@ -102,6 +102,6 @@ module.exports = {
   getConfigurationValueOrDefault,
   calculateDeviceHash,
   generateGuidHash,
-  convertBooleanToYN,
+  convert: { booleanToYN: convertBooleanToYN },
   create: { logger: createLogger, knex: createKnex }
 }

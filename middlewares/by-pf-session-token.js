@@ -20,6 +20,14 @@ const byPfSessionTokenMiddleware = async (req, res, next) => {
   const { pfSessionToken: token } = req.body
   let tokenPayload
 
+  if (!token.includes('.')) {
+    logger.log({
+      level: 'warn',
+      message: "Encrypted platform session token support isn't implemented yet."
+    })
+    return res.json({ isSuccess: false })
+  }
+
   try {
     tokenPayload = jwt.verify(token, jwtSecret)
   } catch (err) {
@@ -28,11 +36,11 @@ const byPfSessionTokenMiddleware = async (req, res, next) => {
       message: `JWT verification error. Message: ${err.message}`,
       details: { error: err }
     })
-    return res.json({ success: false })
+    return res.json({ isSuccess: false })
   }
 
-  if (tokenPayload.type !== 'PLATFORM_SESSION_TOKEN') {
-    return res.json({ success: false })
+  if (tokenPayload.tokenType !== 'PLATFORM_SESSION_TOKEN') {
+    return res.json({ isSuccess: false })
   }
 
   const user = await knex('nt_guest_users')
