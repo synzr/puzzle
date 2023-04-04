@@ -111,3 +111,6 @@ database.sqlite3
 
 # Visual Studio Code
 .vscode/
+
+# package-lock
+package-lock.json
